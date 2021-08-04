@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model, INTEGER
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
@@ -14,21 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   user.init({
-    id : {
-      type: DataTypes.INTEGER,
-      allowNull:false,
-      primaryKey:true,
-    },
-    email: {
-      type :DataTypes.STRING,
-      allowNull:false}, 
-    password:{
-      type: DataTypes.STRING,
-      allowNull: false
-    } 
+    email: {type:DataTypes.STRING,allowNull:false,
+      validate: {
+      notEmpty: true,
+      notIn: [["Demo", "Trial"]],
+      
+    }},
+    password: {type:DataTypes.STRING,allowNull:false,
+      len: {
+        args: [1, 10],
+        msg: "Password must be between 2 to 16", //custom message
+      },}
   }, {
     sequelize,
-    tableName: 'user_table',
+    tableName:'user_table',
     modelName: 'user',
   });
   return user;
