@@ -34,7 +34,35 @@ router.get('/',checkToken,async(req,res)=>{
     }
 
 })
-//
+
+//get user by email
+router.get('/login',checkToken,async(req,res)=>{
+    const email = req.body.email;
+    const password = req.body.password;
+    try {
+        const users= await user.findOne({
+            where:{email}
+        });
+        const result= compareSync(password,users.password);
+    //result.password = undefined;
+    //const jsontoken = sign({result: result},"abc1234",{
+       // expiresIn:"10h"
+    //});
+     res.json({
+         
+            email,
+            success:"1",
+            message:"search successfull"});
+
+    } catch (error) {
+        console.log(error);
+        res.json("error");
+    }
+    
+    
+})
+
+//Login
 router.post('/login',async(req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
