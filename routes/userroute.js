@@ -20,7 +20,6 @@ router.post('/',async function(req,res){
         res.json("error");
     }
     
-    
 })
 
 //get all user
@@ -78,12 +77,12 @@ router.post('/login',async(req,res)=>{
      res.json({token:jsontoken,
                 success:"1",
             message:"successfull"});
+     res.status(200).send({jsontoken});
 
     } catch (error) {
         console.log(error);
         res.json("error");
     }
-    
     
 })
 
